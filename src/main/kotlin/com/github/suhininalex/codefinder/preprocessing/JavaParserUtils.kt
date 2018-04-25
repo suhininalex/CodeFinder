@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.preprocessing.tokens
+package com.github.suhininalex.codefinder.preprocessing
 
 import com.github.javaparser.ParserConfiguration
 import com.github.javaparser.ast.CompilationUnit
@@ -44,6 +44,6 @@ fun Node.elements(): List<Node> {
 val CompilationUnit.packagePath: String
     get() {
         return packageDeclaration
-                .map { it.nameAsString }.orElse("undefined")
+                .map { it.nameAsString }.orElse(JavaProcessor.unresolved)
                 .replace(".", "/")
     }

@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.preprocessing.tokens
+package com.github.suhininalex.codefinder.preprocessing
 
 import com.google.gson.*
 import java.lang.reflect.Type

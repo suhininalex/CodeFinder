@@ -1,6 +1,5 @@
-package com.github.suhininalex.codefinder.preprocessing.tokens
+package com.github.suhininalex.codefinder.preprocessing
 
-import com.github.javaparser.JavaParser
 import com.github.suhininalex.codefinder.utils.*
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
@@ -11,27 +10,24 @@ import com.github.javaparser.ast.expr.SimpleName
 import com.github.javaparser.ast.expr.StringLiteralExpr
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.type.ClassOrInterfaceType
-import java.io.File
 
-class JavaProcessor(private val pathPrefix: String = "") {
+class JavaProcessor {
 
-    fun parse(file: String): FileDescription {
-        val file = File("$pathPrefix$file")
-        val fileAst = JavaParser.parse(file)
-        return parse(fileAst)
+    companion object {
+        val unresolved: String = "unresolved"
     }
 
     internal fun parse(file: CompilationUnit): FileDescription {
         return with (file) {
             FileDescription(
-                    packageName = packageDeclaration.map { it.nameAsString }.orElse("undefined"),
+                    packageName = packageDeclaration.map { it.nameAsString }.orElse(unresolved),
                     imports = imports.mapNotNull { it.packageName },
                     methods = findAll(MethodDeclaration::class.java).map { method -> parse(method) }
             )
         }
     }
 
-    internal fun parse(method: MethodDeclaration): MethodDescription{
+    internal fun parse(method: MethodDeclaration): MethodDescription {
         val resolvedDescription = method.resolve()
         return with(method) {
             MethodDescription(
@@ -63,7 +59,7 @@ class JavaProcessor(private val pathPrefix: String = "") {
         }
     }
 
-    private fun parse(identifier: SimpleName): Token{
+    private fun parse(identifier: SimpleName): Token {
         val parent = identifier.parentNode.orElseThrow { IllegalStateException("There is no parent for node $this") }
         return when (parent){
             is MethodCallExpr -> parse(parent)
@@ -72,10 +68,11 @@ class JavaProcessor(private val pathPrefix: String = "") {
         }
     }
 
-    private fun parse(methodCall: MethodCallExpr): CallToken{
+    private fun parse(methodCall: MethodCallExpr): CallToken {
         return CallToken(
                 name = methodCall.nameAsString,
-                reference = tryOrNull { MethodSolver.resolveInvokedMethod(methodCall)?.fullyQualifiedName } ?: "unresolved"
+                reference = tryOrNull { MethodSolver.resolveInvokedMethod(methodCall)?.fullyQualifiedName }
+                        ?: unresolved
         )
     }
 }

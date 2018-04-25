@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.preprocessing.tokens
+package com.github.suhininalex.codefinder.preprocessing
 
 import com.github.javaparser.ast.expr.MethodCallExpr
 import com.github.javaparser.resolution.declarations.ResolvedMethodDeclaration
