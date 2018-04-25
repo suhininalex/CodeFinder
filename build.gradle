@@ -26,10 +26,14 @@ version '0.0.1'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "com.github.javaparser:javaparser-symbol-solver-core:3.5.13"
+    compile "com.google.code.gson:gson:2.8.0"
+    testCompile 'org.assertj:assertj-core:3.9.0'
 }
 
 compileKotlin {
