@@ -1,0 +1,6 @@
+# Idea files
+.idea
+build
+out
+*.iml
+*.class

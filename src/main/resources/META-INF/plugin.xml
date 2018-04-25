@@ -1,0 +1,7 @@
+<idea-plugin>
+  <id>com.github.suhininalex.codefinder</id>
+  <name>Code Finder</name>
+  <vendor email="suhininalex@gmail.com" url="dummy">Suhinin Alex</vendor>
+  <description>Extended search for code</description>
+  <depends>com.intellij.modules.lang</depends>
+</idea-plugin>
