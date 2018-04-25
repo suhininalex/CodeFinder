@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.preprocessing.tokens
+package com.github.suhininalex.codefinder.preprocessing
 
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ParseProblemException

@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.preprocessing.tokens
+package com.github.suhininalex.codefinder.preprocessing
 
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.body.MethodDeclaration
@@ -35,7 +35,7 @@ class TokenizerTest {
                     LiteralToken("another"), CallToken("hashCode", "java.lang.String.hashCode()")
             ),
             rawContent = normalize(
-                """
+                    """
                     {
                         // Comment Example
                         Integer result = "literal".concat("another").hashCode();
