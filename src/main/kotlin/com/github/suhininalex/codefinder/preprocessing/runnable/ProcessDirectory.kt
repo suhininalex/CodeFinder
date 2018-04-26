@@ -2,7 +2,7 @@ package com.github.suhininalex.codefinder.preprocessing.runnable
 
 import com.github.javaparser.JavaParser
 import com.github.suhininalex.codefinder.preprocessing.JavaProcessor
-import com.github.suhininalex.codefinder.preprocessing.TokenJsonSerializer
+import com.github.suhininalex.codefinder.preprocessing.tokens.TokenJsonSerializer
 import com.github.suhininalex.codefinder.preprocessing.configureSolver
 import com.github.suhininalex.codefinder.utils.findFilesByType
 import java.io.File

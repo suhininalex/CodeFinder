@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.preprocessing
+package com.github.suhininalex.codefinder.preprocessing.tokens
 
 interface Token {
     val name: String

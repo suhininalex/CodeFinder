@@ -1,5 +1,7 @@
 package com.github.suhininalex.codefinder.preprocessing
 
+import com.github.suhininalex.codefinder.preprocessing.tokens.Token
+
 private const val empty: String = ""
 
 data class FileDescription(

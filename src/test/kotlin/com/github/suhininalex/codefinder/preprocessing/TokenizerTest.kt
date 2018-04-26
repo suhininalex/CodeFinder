@@ -2,6 +2,7 @@ package com.github.suhininalex.codefinder.preprocessing
 
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.suhininalex.codefinder.preprocessing.tokens.*
 import com.github.suhininalex.codefinder.utils.normalize
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test

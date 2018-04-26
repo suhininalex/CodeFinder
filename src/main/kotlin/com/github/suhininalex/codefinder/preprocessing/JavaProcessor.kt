@@ -10,6 +10,7 @@ import com.github.javaparser.ast.expr.SimpleName
 import com.github.javaparser.ast.expr.StringLiteralExpr
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.type.ClassOrInterfaceType
+import com.github.suhininalex.codefinder.preprocessing.tokens.*
 
 class JavaProcessor {
 
