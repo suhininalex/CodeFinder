@@ -33,6 +33,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "com.github.javaparser:javaparser-symbol-solver-core:3.5.13"
     compile "com.google.code.gson:gson:2.8.0"
+    compile "org.fusesource.leveldbjni:leveldbjni-all:1.8"
     testCompile 'org.assertj:assertj-core:3.9.0'
 }
 
