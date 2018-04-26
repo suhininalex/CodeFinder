@@ -60,7 +60,7 @@ fun <T> List<T>.slice(range: IntRange): List<T> {
     }
 }
 
-fun <T> List<T>.findAll(condition: (T)->Boolean): List<Int> {
+fun <T> List<T>.findPositions(condition: (T)->Boolean): List<Int> {
     return mapIndexedNotNull{ i, value -> if (condition(value)) i else null }
 }
 
