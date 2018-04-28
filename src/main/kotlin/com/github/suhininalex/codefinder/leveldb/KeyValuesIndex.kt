@@ -59,7 +59,7 @@ class KeyValuesIndex<Key, Value>(
     fun <R> useEntries(body: (Sequence<Entry<Key, Value>>) -> R): R {
         db.iterator().use { it ->
             it.seekToFirst()
-            val entries =  it.asSequence().map { entryFromBytes(it.key) }
+            val entries =  it.asSequence().filter { it.key.isNotEmpty() }.map { entryFromBytes(it.key) }
             return body(entries)
         }
     }
