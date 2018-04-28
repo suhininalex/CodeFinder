@@ -6,4 +6,5 @@ interface MethodIndex {
     fun indexMethod(method: MethodDescription)
     fun getMethodById(id: String): MethodDescription?
     fun getUsagesOf(id: String): Collection<String>
+    fun useMethods(body: (Sequence<MethodDescription>)->Unit)
 }

@@ -2,6 +2,7 @@ package com.github.suhininalex.codefinder.index
 
 import com.github.suhininalex.codefinder.leveldb.KeyValueIndex
 import com.github.suhininalex.codefinder.leveldb.KeyValuesIndex
+import com.github.suhininalex.codefinder.leveldb.LevelDbLogger
 import com.github.suhininalex.codefinder.leveldb.StringExternalizer
 import com.github.suhininalex.codefinder.preprocessing.MethodDescription
 import com.github.suhininalex.codefinder.preprocessing.tokens.CallToken
@@ -11,7 +12,11 @@ import org.iq80.leveldb.Options
 import java.io.File
 
 class PersistedMethodIndex(path: String): MethodIndex {
-    private val db: DB = JniDBFactory.factory.open(File(path), Options())
+
+    private val db: DB = JniDBFactory.factory.open(
+            File(path),
+            Options().logger(LevelDbLogger)
+    )
 
     private val methods: KeyValueIndex<String, MethodDescription> = KeyValueIndex(
             db = db,
@@ -40,5 +45,11 @@ class PersistedMethodIndex(path: String): MethodIndex {
 
     override fun getUsagesOf(id: String): Set<String> {
         return usages.get(id)
+    }
+
+    override fun useMethods(body: (Sequence<MethodDescription>) -> Unit) {
+        return methods.useEntries {
+            body(it.map { it.value })
+        }
     }
 }
