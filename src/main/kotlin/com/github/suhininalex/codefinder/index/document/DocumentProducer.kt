@@ -14,10 +14,24 @@ typealias Word = String
 
 class DocumentProducer(private val methodIndex: MethodIndex){
 
-    fun createUsageContextSection(methodId: MethodId): Section<Word> {
-        return Section<Word>(
-            section = "usage",
-            content = findUsageContexts(methodId).flatten().flatMap { StemTokenizer.tokenize(it) }
+    private val tokenizer = StemTokenizer
+
+    fun useDocuments(body: (Sequence<Document<MethodId, Word>>) -> Unit){
+        methodIndex.useMethods { methods ->
+            val documents = methods.map { method -> createDocument(method) }
+            body(documents)
+        }
+    }
+
+    private fun createDocument(method: MethodDescription): Document<MethodId, Word> {
+        return Document<MethodId, Word>(
+                method.qualifiedName,
+                listOf(
+                    getJavaDocSection(method),
+                    getDeclarationSection(method),
+                    getContentSection(method),
+                    getUsageContextSection(method)
+                )
         )
     }
 
@@ -31,5 +45,33 @@ class DocumentProducer(private val methodIndex: MethodIndex){
         return usages.map { it.findContextFor(qualifiedName = methodId, contextSize = contextSize) }
                 .flatten()
                 .map { it.map { it.name } }
+    }
+
+    private fun getUsageContextSection(method: MethodDescription): Section<Word> {
+        return Section(
+            section = "usage",
+            content = findUsageContexts(method.qualifiedName).flatten().flatMap { tokenizer.tokenize(it) }
+        )
+    }
+
+    private fun getContentSection(method: MethodDescription): Section<Word> {
+        return Section(
+            section = "content",
+            content = method.content.flatMap { tokenizer.tokenize(it.name) }
+        )
+    }
+
+    private fun getDeclarationSection(method: MethodDescription): Section<Word> {
+        return Section(
+            section = "declaration",
+            content = tokenizer.tokenize(method.declaration)
+        )
+    }
+
+    private fun getJavaDocSection(method: MethodDescription): Section<Word> {
+        return Section(
+                section = "javaDoc",
+                content = tokenizer.tokenize(method.javaDoc)
+        )
     }
 }
