@@ -1,5 +1,6 @@
 package com.github.suhininalex.codefinder.preprocessing
 
+import com.github.javaparser.JavaParser
 import com.github.suhininalex.codefinder.utils.*
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
@@ -11,11 +12,26 @@ import com.github.javaparser.ast.expr.StringLiteralExpr
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.suhininalex.codefinder.preprocessing.tokens.*
+import java.io.File
 
-class JavaProcessor {
+class JavaProcessor(vararg solverPackages: String) {
+
+    init {
+        JavaParser.getStaticConfiguration().configureSolver(*solverPackages)
+    }
 
     companion object {
-        val unresolved: String = "unresolved"
+        const val unresolved: String = "unresolved"
+    }
+
+    fun parse(file: File): FileDescription {
+        val fileAst = JavaParser.parse(file)
+        return parse(fileAst)
+    }
+
+    fun parse(code: String): FileDescription {
+        val codeAst = JavaParser.parse(code)
+        return parse(codeAst)
     }
 
     internal fun parse(file: CompilationUnit): FileDescription {

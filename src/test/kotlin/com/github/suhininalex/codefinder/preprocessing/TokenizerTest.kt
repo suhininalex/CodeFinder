@@ -48,9 +48,7 @@ class TokenizerTest {
 
     @Test
     fun `description parse test`() {
-        JavaParser.getStaticConfiguration().configureSolver()
-        val method: MethodDeclaration = JavaParser.parse(code).findFirst(MethodDeclaration::class.java).get()
-        val description: MethodDescription = JavaProcessor().parse(method)
+        val description: MethodDescription = JavaProcessor().parse(code).methods.first()
         assertThat(description).isEqualTo(expectedDescription)
     }
 
