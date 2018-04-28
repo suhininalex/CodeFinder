@@ -1,6 +1,7 @@
 package com.github.suhininalex.codefinder.utils
 
 import com.google.gson.Gson
+import me.tongfei.progressbar.ProgressBar
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
@@ -64,15 +65,6 @@ fun <T> List<T>.findPositions(condition: (T)->Boolean): List<Int> {
     return mapIndexedNotNull{ i, value -> if (condition(value)) i else null }
 }
 
-fun <R> withTime(name: String, body: ()->R): R{
-    print("$name...")
-    val start = System.currentTimeMillis()
-    val result = body()
-    val time = System.currentTimeMillis() - start
-    println("($time ms)")
-    return result
-}
-
 fun <T> Stream<T>.toList(): List<T> {
     return collect(Collectors.toList())
 }
@@ -104,4 +96,14 @@ fun <T> HashSet<T>?.orEmpty(): HashSet<T> {
 
 fun normalize(text: String): String {
     return text.trimIndent().replace("\n", "\r\n")
+}
+
+fun <T> List<T>.wrapWithProgressBar(name: String): Sequence<T> {
+    val progressBar = ProgressBar(name, size.toLong())
+    progressBar.start()
+    return asSequence().mapIndexed { i, it ->
+        progressBar.step()
+        if (i == size - 1) progressBar.stop()
+        it
+    }
 }

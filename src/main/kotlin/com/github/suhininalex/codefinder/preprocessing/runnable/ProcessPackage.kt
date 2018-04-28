@@ -4,6 +4,8 @@ import com.github.javaparser.JavaParser
 import com.github.suhininalex.codefinder.preprocessing.JavaProcessor
 import com.github.suhininalex.codefinder.preprocessing.tokens.TokenJsonSerializer
 import com.github.suhininalex.codefinder.utils.findFilesByType
+import com.github.suhininalex.codefinder.utils.wrapWithProgressBar
+import mu.KotlinLogging
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -17,6 +19,8 @@ fun main(args: Array<String>) {
 class PackageProcessor(private val inputPackage: String, private val outputDirectory: String){
 
     private val processor = JavaProcessor(inputPackage)
+
+    private val logger = KotlinLogging.logger {  }
 
     private fun processFile(file: File){
         val fileAst = JavaParser.parse(file)
@@ -32,13 +36,12 @@ class PackageProcessor(private val inputPackage: String, private val outputDirec
 
     fun run(){
         val files = File(inputPackage).findFilesByType("java").toList()
-        files.forEachIndexed{ i, file ->
+        files.wrapWithProgressBar("Processing java package").forEach { file ->
             try {
-                println("$i/${files.size} Processing file: ${file.name}")
                 processFile(file)
             } catch (e: Exception){
-                println("Could not parse file ${file.name}")
-                e.printStackTrace()
+                logger.warn { "Could not parse file ${file.name}" }
+                logger.trace { e }
             }
         }
     }
