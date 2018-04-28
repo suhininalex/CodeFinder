@@ -16,6 +16,6 @@ object WordTokenizer: StringTokenizer {
 
 object StemTokenizer: StringTokenizer {
     override fun tokenize(string: String): List<String> {
-        return WordTokenizer.tokenize(string).map { EnglishStemmer.stem(it) }
+        return WordTokenizer.tokenize(string).map { EnglishStemmer.stem(it) }.filter { it.length > 1 }
     }
 }
