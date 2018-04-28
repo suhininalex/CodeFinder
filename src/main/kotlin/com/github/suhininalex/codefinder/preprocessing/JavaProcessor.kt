@@ -34,7 +34,7 @@ class JavaProcessor(vararg solverPackages: String) {
         return parse(codeAst)
     }
 
-    internal fun parse(file: CompilationUnit): FileDescription {
+    private fun parse(file: CompilationUnit): FileDescription {
         return with (file) {
             FileDescription(
                     packageName = packageDeclaration.map { it.nameAsString }.orElse(unresolved),
@@ -44,7 +44,7 @@ class JavaProcessor(vararg solverPackages: String) {
         }
     }
 
-    internal fun parse(method: MethodDeclaration): MethodDescription {
+    private fun parse(method: MethodDeclaration): MethodDescription {
         val resolvedDescription = method.resolve()
         return with(method) {
             MethodDescription(

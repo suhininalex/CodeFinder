@@ -20,7 +20,7 @@ class PackageProcessor(private val inputPackage: String, private val outputDirec
 
     private fun processFile(file: File){
         val fileAst = JavaParser.parse(file)
-        val fileDescription = processor.parse(fileAst) //Error
+        val fileDescription = processor.parse(file) //Error
         val packageName = fileAst.packageDeclaration.map { it.nameAsString }.orElse(JavaProcessor.unresolved)
         val packagePath = packageName.replace(".", "/")
         val outputFile = File("$outputDirectory/$packagePath/${file.nameWithoutExtension}.json")
