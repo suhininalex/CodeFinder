@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.index
+package com.github.suhininalex.codefinder.index.description
 
 import com.github.suhininalex.codefinder.leveldb.DataExternalizer
 import com.github.suhininalex.codefinder.leveldb.StringExternalizer

@@ -1,6 +1,6 @@
 package com.github.suhininalex.codefinder.index.document
 
-import com.github.suhininalex.codefinder.index.MethodIndex
+import com.github.suhininalex.codefinder.index.description.MethodIndex
 import com.github.suhininalex.codefinder.preprocessing.MethodDescription
 import com.github.suhininalex.codefinder.preprocessing.tokens.CallToken
 import com.github.suhininalex.codefinder.preprocessing.tokens.Token
@@ -24,7 +24,7 @@ class DocumentProducer(private val methodIndex: MethodIndex){
     }
 
     private fun createDocument(method: MethodDescription): Document<MethodId, Word> {
-        return Document<MethodId, Word>(
+        return Document(
                 method.qualifiedName,
                 listOf(
                     getJavaDocSection(method),

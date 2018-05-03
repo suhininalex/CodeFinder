@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.index
+package com.github.suhininalex.codefinder.index.description
 
 import com.github.suhininalex.codefinder.leveldb.KeyValueIndex
 import com.github.suhininalex.codefinder.leveldb.KeyValuesIndex

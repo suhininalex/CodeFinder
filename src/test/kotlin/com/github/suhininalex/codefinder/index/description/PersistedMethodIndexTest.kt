@@ -1,4 +1,4 @@
-package com.github.suhininalex.codefinder.index
+package com.github.suhininalex.codefinder.index.description
 
 import com.github.suhininalex.codefinder.preprocessing.MethodDescription
 import com.github.suhininalex.codefinder.preprocessing.tokens.CallToken
@@ -7,7 +7,10 @@ import org.junit.Test
 
 class PersistedMethodIndexTest {
 
-    val methodIndex = PersistedMethodIndex("src/test/data/libgdx/index/method")
+    private val methodIndex: MethodIndex
+        get() {
+            return PersistedMethodIndex("src/test/data/libgdx/index/method")
+        }
 
     @Test
     fun `test libgdx index`() {

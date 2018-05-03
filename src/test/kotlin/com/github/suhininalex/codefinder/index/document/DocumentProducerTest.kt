@@ -1,7 +1,7 @@
 package com.github.suhininalex.codefinder.index.document
 
-import com.github.suhininalex.codefinder.index.MethodIndex
-import com.github.suhininalex.codefinder.index.PersistedMethodIndex
+import com.github.suhininalex.codefinder.index.description.MethodIndex
+import com.github.suhininalex.codefinder.index.description.PersistedMethodIndex
 import com.github.suhininalex.codefinder.string.WordTokenizer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
