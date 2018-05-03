@@ -2,6 +2,8 @@ package com.github.suhininalex.codefinder.leveldb
 
 import com.intellij.util.containers.ContainerUtil
 
+val GlobalGenerator = IdGenerator()
+
 class IdGenerator {
     private val existedHashes: MutableSet<Int> = ContainerUtil.newConcurrentSet()
 

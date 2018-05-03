@@ -11,10 +11,11 @@ import java.io.File
 class KeyValuesIndexTest {
 
     private val pathToDb = File("src/test/data/leveldb")
+    private val tablePrefix = 0x01
 
     private fun useTestIndex(body:(KeyValuesIndex<Int, String>)->Unit){
         val db = JniDBFactory.factory.open(pathToDb, Options())
-        val index = KeyValuesIndex(db, "test", IntExternalizer, StringExternalizer)
+        val index = KeyValuesIndex(db, tablePrefix, IntExternalizer, StringExternalizer)
         body(index)
         db.close()
     }

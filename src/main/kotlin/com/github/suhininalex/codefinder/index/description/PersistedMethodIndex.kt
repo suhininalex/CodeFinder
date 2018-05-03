@@ -1,9 +1,6 @@
 package com.github.suhininalex.codefinder.index.description
 
-import com.github.suhininalex.codefinder.leveldb.KeyValueIndex
-import com.github.suhininalex.codefinder.leveldb.KeyValuesIndex
-import com.github.suhininalex.codefinder.leveldb.LevelDbLogger
-import com.github.suhininalex.codefinder.leveldb.StringExternalizer
+import com.github.suhininalex.codefinder.leveldb.*
 import com.github.suhininalex.codefinder.preprocessing.MethodDescription
 import com.github.suhininalex.codefinder.preprocessing.tokens.CallToken
 import org.fusesource.leveldbjni.JniDBFactory
@@ -20,14 +17,14 @@ class PersistedMethodIndex(path: String): MethodIndex {
 
     private val methods: KeyValueIndex<String, MethodDescription> = KeyValueIndex(
             db = db,
-            tablePrefix = "#methods",
+            tablePrefix = GlobalGenerator.idFrom("#methods"),
             keyExternalizer = StringExternalizer,
             valueExternalizer = MethodExternalizer
     )
 
     private val usages: KeyValuesIndex<String, String> = KeyValuesIndex(
             db = db,
-            tablePrefix = "#usages",
+            tablePrefix = GlobalGenerator.idFrom("#methods"),
             keyExternalizer = StringExternalizer,
             valueExternalizer = StringExternalizer
     )

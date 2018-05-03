@@ -4,7 +4,7 @@ import org.iq80.leveldb.DB
 
 class KeyValueIndex<Key, Value>(
     private val db: DB,
-    private val tablePrefix: String,
+    private val tablePrefix: Int,
     private val keyExternalizer: DataExternalizer<Key>,
     private val valueExternalizer: DataExternalizer<Value>){
 
@@ -41,7 +41,7 @@ class KeyValueIndex<Key, Value>(
 
     private fun keyToBytes(key: Key): ByteArray {
         return createBytes { out ->
-            out.writeUTF(tablePrefix)
+            out.writeInt(tablePrefix)
             keyExternalizer.write(out, key)
         }
     }
@@ -56,7 +56,7 @@ class KeyValueIndex<Key, Value>(
 
     private fun keyFromBytes(bytes: ByteArray): Key {
         return useBytes(bytes) { input ->
-            val tablePrefix = input.readUTF()
+            val tablePrefix = input.readInt()
             keyExternalizer.read(input)
         }
     }

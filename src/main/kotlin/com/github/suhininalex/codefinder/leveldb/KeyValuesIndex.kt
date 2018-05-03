@@ -5,14 +5,14 @@ import java.io.*
 
 class KeyValuesIndex<Key, Value>(
         private val db: DB,
-        private val tablePrefix: String,
+        private val tablePrefix: Int,
         private val keyExternalizer: DataExternalizer<Key>,
         private val valueExternalizer: DataExternalizer<Value>) {
 
     fun get(key: Key): Set<Value> {
         val outputBytes = ByteArrayOutputStream()
         val output = DataOutputStream(outputBytes)
-        output.writeUTF(tablePrefix)
+        output.writeInt(tablePrefix)
         keyExternalizer.write(output, key)
         val keyBytes = outputBytes.toByteArray()
 
@@ -66,7 +66,7 @@ class KeyValuesIndex<Key, Value>(
 
     private fun entryFromBytes(bytes: ByteArray): Entry<Key, Value> {
         val input = DataInputStream(ByteArrayInputStream(bytes))
-        val tablePrefix = input.readUTF()
+        val tablePrefix = input.readInt()
         val key = keyExternalizer.read(input)
         val value = valueExternalizer.read(input)
         return Entry(key, value)
@@ -75,7 +75,7 @@ class KeyValuesIndex<Key, Value>(
     private fun entryToBytes(key: Key, value: Value): ByteArray {
         val outputBytes = ByteArrayOutputStream()
         val output = DataOutputStream(outputBytes)
-        output.writeUTF(tablePrefix)
+        output.writeInt(tablePrefix)
         keyExternalizer.write(output, key)
         valueExternalizer.write(output, value)
         return outputBytes.toByteArray()
