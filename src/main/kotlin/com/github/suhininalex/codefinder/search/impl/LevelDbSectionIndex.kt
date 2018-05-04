@@ -4,10 +4,7 @@ import com.github.suhininalex.codefinder.leveldb.*
 import com.github.suhininalex.codefinder.search.api.SectionIndex
 import org.iq80.leveldb.DB
 
-typealias SectionID = String
-typealias WORD = String
-
-class LevelDbSectionIndex(db: DB, indexId: Int): SectionIndex<SectionID, WORD> {
+open class LevelDbSectionIndex(db: DB, indexId: Int): SectionIndex<SectionID, WORD> {
 
     private val index: KeyValuesIndex<WORD, SectionID> = KeyValuesIndex(
             db = db,
