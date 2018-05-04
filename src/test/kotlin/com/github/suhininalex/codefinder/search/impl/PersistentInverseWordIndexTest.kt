@@ -19,7 +19,7 @@ class PersistentInverseWordIndexTest {
     @Before
     fun setUp(){
         useSectionIndex { index ->
-            entries.forEach { (id, words) -> index.indexSection(id, words) }
+            entries.forEach { (id, words) -> index.index(id, words) }
         }
     }
 

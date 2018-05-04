@@ -17,7 +17,7 @@ open class PersistentInverseWordIndex(db: DB, indexId: Int): InverseWordIndex<Se
         return content.map { word -> Entry(word, id) }
     }
 
-    override fun indexSection(id: SectionID, content: List<WORD>) {
+    override fun index(id: SectionID, content: List<WORD>) {
         index.putAll(entries(id, content))
     }
 
