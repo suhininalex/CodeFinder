@@ -4,6 +4,8 @@ import com.github.suhininalex.codefinder.index.description.MethodIndex
 import com.github.suhininalex.codefinder.preprocessing.MethodDescription
 import com.github.suhininalex.codefinder.preprocessing.tokens.CallToken
 import com.github.suhininalex.codefinder.preprocessing.tokens.Token
+import com.github.suhininalex.codefinder.search.api.Document
+import com.github.suhininalex.codefinder.search.api.Section
 import com.github.suhininalex.codefinder.string.StemTokenizer
 import com.github.suhininalex.codefinder.utils.findPositions
 import com.github.suhininalex.codefinder.utils.slice
@@ -27,10 +29,10 @@ class DocumentProducer(private val methodIndex: MethodIndex){
         return Document(
                 method.qualifiedName,
                 listOf(
-                    getJavaDocSection(method),
-                    getDeclarationSection(method),
-                    getContentSection(method),
-                    getUsageContextSection(method)
+                        getJavaDocSection(method),
+                        getDeclarationSection(method),
+                        getContentSection(method),
+                        getUsageContextSection(method)
                 )
         )
     }
@@ -49,22 +51,22 @@ class DocumentProducer(private val methodIndex: MethodIndex){
 
     private fun getUsageContextSection(method: MethodDescription): Section<Word> {
         return Section(
-            section = "usage",
-            content = findUsageContexts(method.qualifiedName).flatten().flatMap { tokenizer.tokenize(it) }
+                section = "usage",
+                content = findUsageContexts(method.qualifiedName).flatten().flatMap { tokenizer.tokenize(it) }
         )
     }
 
     private fun getContentSection(method: MethodDescription): Section<Word> {
         return Section(
-            section = "content",
-            content = method.content.flatMap { tokenizer.tokenize(it.name) }
+                section = "content",
+                content = method.content.flatMap { tokenizer.tokenize(it.name) }
         )
     }
 
     private fun getDeclarationSection(method: MethodDescription): Section<Word> {
         return Section(
-            section = "declaration",
-            content = tokenizer.tokenize(method.declaration)
+                section = "declaration",
+                content = tokenizer.tokenize(method.declaration)
         )
     }
 
