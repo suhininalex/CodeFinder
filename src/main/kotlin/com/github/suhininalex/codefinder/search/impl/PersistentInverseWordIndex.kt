@@ -1,10 +1,10 @@
 package com.github.suhininalex.codefinder.search.impl
 
 import com.github.suhininalex.codefinder.leveldb.*
-import com.github.suhininalex.codefinder.search.api.SectionIndex
+import com.github.suhininalex.codefinder.search.api.InverseWordIndex
 import org.iq80.leveldb.DB
 
-open class LevelDbSectionIndex(db: DB, indexId: Int): SectionIndex<SectionID, WORD> {
+open class PersistentInverseWordIndex(db: DB, indexId: Int): InverseWordIndex<SectionID, WORD> {
 
     private val index: KeyValuesIndex<WORD, SectionID> = KeyValuesIndex(
             db = db,

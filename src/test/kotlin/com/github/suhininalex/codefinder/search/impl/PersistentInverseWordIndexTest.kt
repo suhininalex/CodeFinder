@@ -1,18 +1,17 @@
 package com.github.suhininalex.codefinder.search.impl
 
 import com.github.suhininalex.codefinder.leveldb.Entry
-import com.github.suhininalex.codefinder.search.api.SectionIndex
+import com.github.suhininalex.codefinder.search.api.InverseWordIndex
 import org.assertj.core.api.Assertions.assertThat
 import org.fusesource.leveldbjni.JniDBFactory
 import org.fusesource.leveldbjni.JniDBFactory.factory
-import org.iq80.leveldb.DB
 import org.iq80.leveldb.Options
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.io.File
 
-class LevelDbSectionIndexTest {
+class PersistentInverseWordIndexTest {
 
     private val pathToDb = File("src/test/data/leveldb/")
     private val indexId = 0x01
@@ -29,9 +28,9 @@ class LevelDbSectionIndexTest {
         JniDBFactory.factory.destroy(pathToDb, Options())
     }
 
-    private fun useSectionIndex(body: (SectionIndex<SectionID, WORD>) -> Unit){
+    private fun useSectionIndex(body: (InverseWordIndex<SectionID, WORD>) -> Unit){
         val db = factory.open(pathToDb, Options())
-        val index = LevelDbSectionIndex(db, indexId)
+        val index = PersistentInverseWordIndex(db, indexId)
         body(index)
         db.close()
     }
