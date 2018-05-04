@@ -4,17 +4,20 @@ import com.intellij.util.containers.ContainerUtil
 
 val GlobalGenerator = IdGenerator()
 
-class IdGenerator {
+class IdGenerator(private val isSafe: Boolean = true) {
     private val existedHashes: MutableSet<Int> = ContainerUtil.newConcurrentSet()
+
+    private fun check(hash: Int){
+        val succeed = existedHashes.add(hash)
+        if (! succeed) {
+            throw IllegalArgumentException("Hash [$hash] already exists already exists.")
+        }
+    }
 
     fun idFrom(input: ByteArray): Int {
         val hash = input.contentHashCode()
-        val succeed = existedHashes.add(hash)
-        if (succeed) {
-            return hash
-        } else {
-            throw IllegalArgumentException("Id for input ${input.toList()} already exists.")
-        }
+        if (isSafe) check(hash)
+        return hash
     }
 
     fun idFrom(input: String): Int {
